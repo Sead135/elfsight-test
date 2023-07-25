@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 
 export const FilterBar = ({ setFilterSettings }) => {
   const [filters, setFilters] = useState([])
+  const [searchValue, setSearchValue] = useState('')
   const [showDetailFilter, setShowDetailFilter] = useState({
     type: false,
     status: false,
@@ -33,6 +34,7 @@ export const FilterBar = ({ setFilterSettings }) => {
 
   const clearAllFilters = () => {
     setFilters([])
+    setSearchValue('')
     setFilterSettings('clear-all')
   }
 
@@ -43,99 +45,115 @@ export const FilterBar = ({ setFilterSettings }) => {
   return (
     <Container>
       <Filter>
-        <FilterType>
-          <FilterButton onClick={() => handleOpenFilter('type')}>
-            Type
-          </FilterButton>
-          <FilterPopup $show={showDetailFilter.type}>
-            {typeOptions.map((option) => (
-              <FilterItem
-                key={option.name}
-                $select={filters.find(
-                  (filter) =>
-                    filter.type === 'type' && filter.value === option.value
-                )}
-                onClick={() =>
-                  chooseFilter({ type: 'type', value: option.value })
-                }
-              >
-                {option.name}
-              </FilterItem>
-            ))}
-          </FilterPopup>
-        </FilterType>
+        <FilterOptions>
+          <FilterType>
+            <FilterButton onClick={() => handleOpenFilter('type')}>
+              Type
+            </FilterButton>
+            <FilterPopup $show={showDetailFilter.type}>
+              {typeOptions.map((option) => (
+                <FilterItem
+                  key={option.name}
+                  $select={filters.find(
+                    (filter) =>
+                      filter.type === 'type' && filter.value === option.value
+                  )}
+                  onClick={() =>
+                    chooseFilter({ type: 'type', value: option.value })
+                  }
+                >
+                  {option.name}
+                </FilterItem>
+              ))}
+            </FilterPopup>
+          </FilterType>
 
-        <FilterStatus>
-          <FilterButton onClick={() => handleOpenFilter('status')}>
-            Status
-          </FilterButton>
-          <FilterPopup $show={showDetailFilter.status}>
-            {statusOptions.map((option) => (
-              <FilterItem
-                key={option.name}
-                $select={filters.find(
-                  (filter) =>
-                    filter.type === 'status' && filter.value === option.value
-                )}
-                onClick={() =>
-                  chooseFilter({ type: 'status', value: option.value })
-                }
-              >
-                {option.name}
-              </FilterItem>
-            ))}
-          </FilterPopup>
-        </FilterStatus>
+          <FilterStatus>
+            <FilterButton onClick={() => handleOpenFilter('status')}>
+              Status
+            </FilterButton>
+            <FilterPopup $show={showDetailFilter.status}>
+              {statusOptions.map((option) => (
+                <FilterItem
+                  key={option.name}
+                  $select={filters.find(
+                    (filter) =>
+                      filter.type === 'status' && filter.value === option.value
+                  )}
+                  onClick={() =>
+                    chooseFilter({ type: 'status', value: option.value })
+                  }
+                >
+                  {option.name}
+                </FilterItem>
+              ))}
+            </FilterPopup>
+          </FilterStatus>
 
-        <FilterSpecies>
-          <FilterButton onClick={() => handleOpenFilter('species')}>
-            Species
-          </FilterButton>
-          <FilterPopup $show={showDetailFilter.species}>
-            {speciesOptions.map((option) => (
-              <FilterItem
-                key={option.name}
-                $select={filters.find(
-                  (filter) =>
-                    filter.type === 'species' && filter.value === option.value
-                )}
-                onClick={() =>
-                  chooseFilter({ type: 'species', value: option.value })
-                }
-              >
-                {option.name}
-              </FilterItem>
-            ))}
-          </FilterPopup>
-        </FilterSpecies>
+          <FilterSpecies>
+            <FilterButton onClick={() => handleOpenFilter('species')}>
+              Species
+            </FilterButton>
+            <FilterPopup $show={showDetailFilter.species}>
+              {speciesOptions.map((option) => (
+                <FilterItem
+                  key={option.name}
+                  $select={filters.find(
+                    (filter) =>
+                      filter.type === 'species' && filter.value === option.value
+                  )}
+                  onClick={() =>
+                    chooseFilter({ type: 'species', value: option.value })
+                  }
+                >
+                  {option.name}
+                </FilterItem>
+              ))}
+            </FilterPopup>
+          </FilterSpecies>
 
-        <FilterGender>
-          <FilterButton onClick={() => handleOpenFilter('gender')}>
-            Gender
-          </FilterButton>
-          <FilterPopup $show={showDetailFilter.gender}>
-            {genderOptions.map((option) => (
-              <FilterItem
-                key={option.name}
-                $select={filters.find(
-                  (filter) =>
-                    filter.type === 'gender' && filter.value === option.value
-                )}
-                onClick={() =>
-                  chooseFilter({ type: 'gender', value: option.value })
-                }
-              >
-                {option.name}
-              </FilterItem>
-            ))}
-          </FilterPopup>
-        </FilterGender>
+          <FilterGender>
+            <FilterButton onClick={() => handleOpenFilter('gender')}>
+              Gender
+            </FilterButton>
+            <FilterPopup $show={showDetailFilter.gender}>
+              {genderOptions.map((option) => (
+                <FilterItem
+                  key={option.name}
+                  $select={filters.find(
+                    (filter) =>
+                      filter.type === 'gender' && filter.value === option.value
+                  )}
+                  onClick={() =>
+                    chooseFilter({ type: 'gender', value: option.value })
+                  }
+                >
+                  {option.name}
+                </FilterItem>
+              ))}
+            </FilterPopup>
+          </FilterGender>
 
-        {filters.length !== 0 && (
-          <FilterButton onClick={clearAllFilters} style={{ color: 'red' }}>
-            Clear All
+          {filters.length !== 0 && (
+            <FilterButton onClick={clearAllFilters} style={{ color: 'red' }}>
+              Clear All
+            </FilterButton>
+          )}
+        </FilterOptions>
+
+        <FilterName>
+          <input
+            value={searchValue}
+            type="text"
+            placeholder='Enter query...'
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <FilterButton
+            onClick={() => chooseFilter({ type: 'name', value: searchValue })}
+          >
+            Search
           </FilterButton>
-        )}
+        </FilterName>
       </Filter>
     </Container>
   )
@@ -158,9 +176,34 @@ const FilterSpecies = styled.div``
 
 const FilterGender = styled.div``
 
+const FilterOptions = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+`
+
+const FilterName = styled.div`
+  display: flex;
+  gap: 20px;
+
+  input {
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 18px;
+    max-width: 300px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+`
+
 const Filter = styled.div`
   position: relative;
   display: flex;
+  width: 100%;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 20px;
 `
