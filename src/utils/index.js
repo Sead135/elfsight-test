@@ -1,2 +1,1 @@
-export * from './filterOptions';
-export * from './getStatusColor';
+export * from './getStatusColor.js';

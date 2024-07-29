@@ -1,1 +1,1 @@
-export * from './useRickAndMortyData';
+export * from './useRickAndMortyData.js';

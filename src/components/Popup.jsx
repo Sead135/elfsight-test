@@ -1,11 +1,10 @@
-import ReactDOM from 'react-dom'
-import { styled } from 'styled-components'
+import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 
-import { EpisodeGrid } from './EpisodeGrid'
-import { getStatusColor } from '../utils'
+import { getStatusColor } from '../utils';
 
 export const Popup = ({ data, closePopup }) => {
-  const statusColor = getStatusColor(data.status)
+  const statusColor = getStatusColor(data.status);
   return ReactDOM.createPortal(
     <>
       <Container>
@@ -45,20 +44,13 @@ export const Popup = ({ data, closePopup }) => {
               <Description>{data.type}</Description>
             </Type>
           )}
-
-          {data.episode?.length && (
-            <Episodes>
-              <Subtitle>Episodes:</Subtitle>
-              <EpisodeGrid urls={data.episode} />
-            </Episodes>
-          )}
         </Content>
       </Container>
       <Background />
     </>,
     document.body
-  )
-}
+  );
+};
 
 const Container = styled.div`
   position: fixed;
@@ -80,7 +72,7 @@ const Container = styled.div`
   @media (max-width: 480px) {
     flex-direction: column;
   }
-`
+`;
 
 const Close = styled.button`
   position: absolute;
@@ -95,7 +87,7 @@ const Close = styled.button`
   @media (max-width: 480px) {
     background-color: #ffffff;
   }
-`
+`;
 
 const Image = styled.img`
   width: 50%;
@@ -103,7 +95,7 @@ const Image = styled.img`
   @media (max-width: 480px) {
     width: 100%;
   }
-`
+`;
 
 const Content = styled.div`
   width: 50%;
@@ -114,53 +106,49 @@ const Content = styled.div`
     width: 100%;
     margin: 10px 0 0 0;
   }
-`
+`;
 
 const Title = styled.h2`
   margin: 0 0 30px 0;
   font-size: 24px;
   font-weight: 700;
-`
+`;
 
 const Subtitle = styled.div`
   font-size: 14px;
   font-weight: 700;
-`
+`;
 
-const Description = styled.div``
+const Description = styled.div``;
 
 const Category = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 14px;
-`
+`;
 
 const Status = styled.span`
   color: ${({ $status }) => $status};
-`
+`;
 
-const Species = styled.span``
+const Species = styled.span``;
 
 const Gender = styled.div`
   margin-bottom: 14px;
-`
+`;
 
 const Location = styled.div`
   margin-bottom: 14px;
-`
+`;
 
 const Seen = styled.div`
   margin-bottom: 14px;
-`
+`;
 
 const Type = styled.div`
   margin-bottom: 14px;
-`
-
-const Episodes = styled.div`
-  margin-bottom: 14px;
-`
+`;
 
 const Background = styled.div`
   position: fixed;
@@ -171,4 +159,4 @@ const Background = styled.div`
   width: 100%;
   height: 100%;
   z-index: 2;
-`
+`;
