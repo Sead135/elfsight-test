@@ -1,5 +1,6 @@
-import { Main, Header } from './components'
 import { createGlobalStyle, styled } from 'styled-components'
+
+import { Header, Main } from './components'
 
 const App = () => {
   return (

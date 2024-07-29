@@ -1,11 +1,13 @@
+import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { styled } from 'styled-components'
+
 import {
   genderOptions,
   speciesOptions,
   statusOptions,
   typeOptions,
-} from '../utils/filterOptions'
-import { useEffect, useState } from 'react'
+} from '../utils'
 
 export const FilterBar = ({ setFilterSettings }) => {
   const [filters, setFilters] = useState([])
@@ -145,7 +147,7 @@ export const FilterBar = ({ setFilterSettings }) => {
           <input
             value={searchValue}
             type="text"
-            placeholder='Enter query...'
+            placeholder="Enter query..."
             onChange={(e) => setSearchValue(e.target.value)}
           />
           <FilterButton
@@ -241,3 +243,7 @@ const FilterItem = styled.div`
     padding: 2px 5px;
   `}
 `
+
+FilterBar.propTypes = {
+  setFilterSettings: PropTypes.func.isRequired,
+}

@@ -1,3 +1,3 @@
-export { Header } from './Header'
-export { Main } from './Main'
-export { Popup } from './Popup'
+export { Header } from './Header';
+export { Main } from './Main';
+export { Popup } from './Popup';

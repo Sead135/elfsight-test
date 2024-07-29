@@ -1,6 +1,8 @@
 import ReactDOM from 'react-dom'
 import { styled } from 'styled-components'
-import { getStatusColor } from '../utils/getStatusColor'
+
+import { EpisodeGrid } from './EpisodeGrid'
+import { getStatusColor } from '../utils'
 
 export const Popup = ({ data, closePopup }) => {
   const statusColor = getStatusColor(data.status)
@@ -43,6 +45,13 @@ export const Popup = ({ data, closePopup }) => {
               <Description>{data.type}</Description>
             </Type>
           )}
+
+          {data.episode?.length && (
+            <Episodes>
+              <Subtitle>Episodes:</Subtitle>
+              <EpisodeGrid urls={data.episode} />
+            </Episodes>
+          )}
         </Content>
       </Container>
       <Background />
@@ -55,12 +64,13 @@ const Container = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(calc(-50% - 20px), -50%);
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: flex-start;
   max-width: min(calc(100% - 80px), 650px);
   width: 100%;
-  margin: 20px;
+  max-height: calc(100% - 40px);
+  overflow-y: scroll;
   flex: 1;
   background-color: #ffffff;
   padding: 20px;
@@ -145,6 +155,10 @@ const Seen = styled.div`
 `
 
 const Type = styled.div`
+  margin-bottom: 14px;
+`
+
+const Episodes = styled.div`
   margin-bottom: 14px;
 `
 

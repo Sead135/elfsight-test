@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import useRickAndMortyData from '../hook/useRickAndMortyData'
 import { styled } from 'styled-components'
-import { Popup } from './Popup'
-import { getStatusColor } from '../utils/getStatusColor'
+
 import { FilterBar } from './FilterBar'
+import { Popup } from './Popup'
+import {useRickAndMortyData} from '../hook'
+import { getStatusColor } from '../utils'
 
 export const Main = () => {
   const { data, isLoading, isNextPage, loadNextPage, filterData } =
