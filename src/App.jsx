@@ -1,5 +1,6 @@
-import { Main, Header } from './components'
-import { createGlobalStyle, styled } from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components';
+
+import { Header, Main } from './components';
 
 const App = () => {
   return (
@@ -8,10 +9,10 @@ const App = () => {
       <Main />
       <GlobalStyle />
     </Wrapper>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -22,6 +23,6 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
   }
-`
+`;
 
-const Wrapper = styled.div``
+const Wrapper = styled.div``;

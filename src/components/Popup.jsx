@@ -1,9 +1,10 @@
-import ReactDOM from 'react-dom'
-import { styled } from 'styled-components'
-import { getStatusColor } from '../utils/getStatusColor'
+import ReactDOM from 'react-dom';
+import styled from 'styled-components';
+
+import { getStatusColor } from '../utils';
 
 export const Popup = ({ data, closePopup }) => {
-  const statusColor = getStatusColor(data.status)
+  const statusColor = getStatusColor(data.status);
   return ReactDOM.createPortal(
     <>
       <Container>
@@ -48,19 +49,20 @@ export const Popup = ({ data, closePopup }) => {
       <Background />
     </>,
     document.body
-  )
-}
+  );
+};
 
 const Container = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(calc(-50% - 20px), -50%);
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: flex-start;
   max-width: min(calc(100% - 80px), 650px);
   width: 100%;
-  margin: 20px;
+  max-height: calc(100% - 40px);
+  overflow-y: scroll;
   flex: 1;
   background-color: #ffffff;
   padding: 20px;
@@ -70,7 +72,7 @@ const Container = styled.div`
   @media (max-width: 480px) {
     flex-direction: column;
   }
-`
+`;
 
 const Close = styled.button`
   position: absolute;
@@ -85,7 +87,7 @@ const Close = styled.button`
   @media (max-width: 480px) {
     background-color: #ffffff;
   }
-`
+`;
 
 const Image = styled.img`
   width: 50%;
@@ -93,7 +95,7 @@ const Image = styled.img`
   @media (max-width: 480px) {
     width: 100%;
   }
-`
+`;
 
 const Content = styled.div`
   width: 50%;
@@ -104,49 +106,49 @@ const Content = styled.div`
     width: 100%;
     margin: 10px 0 0 0;
   }
-`
+`;
 
 const Title = styled.h2`
   margin: 0 0 30px 0;
   font-size: 24px;
   font-weight: 700;
-`
+`;
 
 const Subtitle = styled.div`
   font-size: 14px;
   font-weight: 700;
-`
+`;
 
-const Description = styled.div``
+const Description = styled.div``;
 
 const Category = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 14px;
-`
+`;
 
 const Status = styled.span`
   color: ${({ $status }) => $status};
-`
+`;
 
-const Species = styled.span``
+const Species = styled.span``;
 
 const Gender = styled.div`
   margin-bottom: 14px;
-`
+`;
 
 const Location = styled.div`
   margin-bottom: 14px;
-`
+`;
 
 const Seen = styled.div`
   margin-bottom: 14px;
-`
+`;
 
 const Type = styled.div`
   margin-bottom: 14px;
-`
+`;
 
 const Background = styled.div`
   position: fixed;
@@ -157,4 +159,4 @@ const Background = styled.div`
   width: 100%;
   height: 100%;
   z-index: 2;
-`
+`;
