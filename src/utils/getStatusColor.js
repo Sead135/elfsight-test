@@ -1,7 +1,8 @@
 export const getStatusColor = (status = '') => {
-  return ({
+  const formatStatus = status.toLowerCase()
+  return {
     alive: '#008000',
     dead: '#ff0000',
     unknown: '#808080',
-  })[status]
+  }[formatStatus]
 }
