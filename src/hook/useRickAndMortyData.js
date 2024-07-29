@@ -2,16 +2,6 @@ import { useEffect, useState } from 'react'
 
 const API_URL = 'https://rickandmortyapi.com/api/character'
 
-function objectToURLParams(obj) {
-  const urlParams = []
-  for (const param of obj) {
-    urlParams.push(
-      `${encodeURIComponent(param.type)}=${encodeURIComponent(param.value)}`
-    )
-  }
-  return urlParams.join('&')
-}
-
 const useRickAndMortyData = () => {
   const [data, setData] = useState([])
   const [isLoading, setLoading] = useState(true)
@@ -32,8 +22,7 @@ const useRickAndMortyData = () => {
 
       setLoading(false)
     } catch (error) {
-      setLoading(false)
-      setData([])
+      setData((prevData) => prevData || [])
     }
   }
 
@@ -44,23 +33,11 @@ const useRickAndMortyData = () => {
   const loadNextPage = () => {
     if (nextPage) {
       setLoading(true)
-      fetchData(nextPage)
+      fetchData()
     }
   }
 
-  const filterData = (value) => {
-    setData([])
-    setLoading(true)
-    if (value === 'clear-all') {
-      fetchData(`${API_URL}?page=1`)
-      return
-    }
-    const params = objectToURLParams(value)
-    const newURL = `${API_URL}?${params}`
-    fetchData(newURL)
-  }
-
-  return { data, isLoading, isNextPage: nextPage, loadNextPage, filterData }
+  return { data, isLoading, isNextPage: nextPage, loadNextPage }
 }
 
 export default useRickAndMortyData

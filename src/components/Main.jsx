@@ -1,34 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import useRickAndMortyData from '../hook/useRickAndMortyData'
 import { styled } from 'styled-components'
 import { Popup } from './Popup'
 import { getStatusColor } from '../utils/getStatusColor'
-import { FilterBar } from './FilterBar'
 
 export const Main = () => {
-  const { data, isLoading, isNextPage, loadNextPage, filterData } =
-    useRickAndMortyData()
-  const [filterSettings, setFilterSettings] = useState([])
+  const { data, isLoading, isNextPage, loadNextPage } = useRickAndMortyData()
   const [showPopup, setShowPopup] = useState(false)
   const [popupData, setPopupData] = useState({})
 
+  const handlePopup = useCallback(() => {
+    setShowPopup((prevState) => (!prevState).toString())
+  }, [])
+
   const closePopup = () => {
-    setShowPopup(false)
-    document.body.style.overflow = 'auto'
+    handlePopup()
     setPopupData({})
   }
 
   const openPopup = (data) => {
-    setShowPopup(true)
-    document.body.style.overflow = 'hidden'
+    handlePopup()
     setPopupData(data)
   }
-
-  useEffect(() => {
-    if (filterSettings.length !== 0 || filterSettings === 'clear-all') {
-      filterData(filterSettings)
-    }
-  }, [filterSettings])
 
   return (
     <Container>
@@ -36,16 +29,16 @@ export const Main = () => {
         <BigTitle>The Rick and Morty</BigTitle>
       </Hero>
       <Content>
-        <FilterBar setFilterSettings={setFilterSettings} />
+        {/* <Create Filter Bar/> */}
         <Grid>
           {!isLoading && data.length === 0 ? (
             <Message>Not Found</Message>
           ) : (
-            data.map((data) => {
+            data.map((data, index) => {
               const statusColor = getStatusColor(data.status)
               return (
                 <GridItem
-                  key={`${data.id}-${data.name}`}
+                  key={`${data.id}-${data.name}-${index}`}
                   onClick={() => openPopup(data)}
                 >
                   <ImageContainer>
@@ -53,7 +46,9 @@ export const Main = () => {
                   </ImageContainer>
                   <GridTitle>{data.name}</GridTitle>
                   <GridType>{data.species}</GridType>
-                  <GridStatus $status={statusColor} />
+                  <GridStatus $status={statusColor}>
+                    {!statusColor && '?'}
+                  </GridStatus>
                 </GridItem>
               )
             })
@@ -125,6 +120,11 @@ const GridStatus = styled.span`
   border-radius: 50%;
   border: 1px solid #ffffff;
   background-color: ${({ $status }) => $status};
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
 `
 
 const Message = styled.h3`
